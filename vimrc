@@ -4,7 +4,7 @@ filetype off
 if has('win32') || has('win64')
     " If you are cloning this file you need to update the next line to your
     " .vim directory
-    let g:DV='C:\opt\vim\.vim'
+    let g:DV='C:\users\ed\.vim'
 
     " Swap the comment out lines if you don't want to install better consolas
     " if you want to update your fonts, go to .vim/windows and double click
@@ -44,11 +44,6 @@ Bundle 'tpope/vim-unimpaired.git'
 Bundle 'vim-scripts/greplace.vim'
 Bundle 'ap/vim-css-color.git'
 
-Bundle 'sjl/gundo.vim.git'
-nnoremap <silent> <F4> :GundoToggle<CR>
-let g:gundo_right = 1
-let g:gundo_help  = 0
-
 Bundle 'scrooloose/nerdtree.git'
 noremap <silent> <F1> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\~$', '\.pyc']
@@ -83,10 +78,6 @@ autocmd FileType *
 Bundle 'Lokaltog/vim-powerline.git'
 let g:Powerline_stl_path_style='short'
 
-Bundle 'johndgiese/vipy.git'
-let g:vipy_profile='david'
-let g:vipy_position='rightbelow'
-
 Bundle 'kien/ctrlp.vim.git'
 let g:ctrlp_cmd='CtrlPRoot'
 
@@ -106,9 +97,6 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
-
-" Python Debugger
-" Bundle 'joonty/vdebug.git'
 
 filetype plugin indent on
 filetype plugin on
@@ -138,7 +126,7 @@ if !exists('g:vimrc_has_run')
     syntax enable                   " turn syntax highlighting
     set background=light
     let g:solarized_termcolors=256
-    colorscheme betterblack
+    exe 'source '.g:DV."/colors/betterblack.vim"
 endif
 
 " branching undo is new in vim 7.3
@@ -183,8 +171,6 @@ if !exists("autocommands_loaded")
 endif
 
 " CUSTOM KEYCOMMANDS
-" use comma instead of \ for leader, because it is closer
-map \ ,
 
 " insert the very magic reg-ex mode every time
 set hlsearch incsearch
@@ -193,10 +179,8 @@ nnoremap ? ?\v
 nnoremap <silent> <leader>/ :noh<CR>
 
 " switch semi-colon and colon
-nnoremap ; :
-vnoremap ; :
-nnoremap : ;
-vnoremap : ;
+nnoremap <Space> :
+vnoremap <Space> :
 
 " Remap block-visual mode to alt-V, and set paste-from-clipboard to C-v
 nnoremap <A-v> <C-v>
@@ -242,8 +226,7 @@ nnoremap <silent> <leader>s :set spell!<CR>
 set spelllang=en_us " Set region to US English
 
 " Better <ESC> (to go back to normal mode from insert mode)
-inoremap jk <ESC>
-inoremap <ESC> <nop>
+inoremap <C-Space> <ESC>
 noremap <C-s> :w<CR>
 
 " Start editing the vimrc in a new buffer
