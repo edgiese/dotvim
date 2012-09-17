@@ -1,0 +1,13 @@
+My Notes
+
+TABS -----------------------------------------------------------------------------
+############### basic tab settings
+:set tabstop=4
+:set shiftwidth=4
+:set expandtab | noexpandtab
+# changes tabs to spaces in existing file
+:retab  
+############### make tabs visible
+:set listchars=tab:>-
+:set list | nolist
+

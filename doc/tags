@@ -348,6 +348,10 @@ quote-l	latexhelp.txt	/*quote-l*
 report-class	latexhelp.txt	/*report-class*
 roman	latexhelp.txt	/*roman*
 rqno	latexhelp.txt	/*rqno*
+sed	notes.txt	/*sed*
+sfphone	notes.txt	/*sfphone*
+sfsed	notes.txt	/*sfsed*
+sfvim	notes.txt	/*sfvim*
 slides-class	latexhelp.txt	/*slides-class*
 sub-sup	latexhelp.txt	/*sub-sup*
 subscripts	latexhelp.txt	/*subscripts*
@@ -385,3 +389,4 @@ twocolumn	latexhelp.txt	/*twocolumn*
 twoside	latexhelp.txt	/*twoside*
 verbatim	latexhelp.txt	/*verbatim*
 verse	latexhelp.txt	/*verse*
+vim	notes.txt	/*vim*

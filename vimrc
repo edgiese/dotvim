@@ -1,22 +1,21 @@
 set nocompatible                " vi compatible is LAME
 autocmd!
 filetype off
+let g:DV='~/.vim'
 if has('win32') || has('win64')
     " If you are cloning this file you need to update the next line to your
     " .vim directory
-    let g:DV='C:\users\ed\.vim'
 
     " Swap the comment out lines if you don't want to install better consolas
     " if you want to update your fonts, go to .vim/windows and double click
     " all of the font files there to install them
-    set guifont=Consolas\ for\ Powerline\ FixedD:h10
+    set guifont=Lucida\ Console:h9
     let g:Powerline_symbols='fancy'
     " set guifont=Consolas:h10
     " let g:Powerline_symbols = 'compatible'
 elseif has('mac')
     " I don't know which mac font to use
     " set guifont=Monospace\ 8
-    let g:DV='~/.vim'
     let g:Powerline_symbols='compatible'
 else
     " set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
@@ -24,7 +23,6 @@ else
     " set guifont=ProggyCleanTT\ 12
     set guifont=CodingFontTobi\ 12
     " set guifont=ProggyTinyTTSZ\ 12
-    let g:DV='~/.vim'
     let g:Powerline_symbols='fancy'
 endif
 
@@ -75,6 +73,7 @@ autocmd FileType *
    \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
    \ endif
 
+Bundle "MarcWeber/vim-addon-mw-utils.git"
 Bundle 'Lokaltog/vim-powerline.git'
 let g:Powerline_stl_path_style='short'
 
@@ -93,10 +92,36 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                             \ 'passive_filetypes': [] }
 
 " Snipmate and three dependencies
-Bundle "MarcWeber/vim-addon-mw-utils"
+" To freshen, use the :BundleInstall Command
 Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
+Bundle "beyondwords/vim-twig"
+
+
+" JSON support
+au! BufRead,BufNewFile *.json set filetype=json 
+augroup json_autocmd 
+  autocmd! 
+  autocmd FileType json set autoindent 
+  autocmd FileType json set formatoptions=tcq2l 
+  autocmd FileType json set textwidth=78 shiftwidth=2 
+  autocmd FileType json set softtabstop=2 tabstop=8 
+  autocmd FileType json set expandtab 
+  autocmd FileType json set foldmethod=syntax 
+augroup END 
+
+" php File Settings
+au BufRead,BufNewFile *.php set filetype=php
+augroup php_autocmd 
+  autocmd FileType php set autoindent 
+  autocmd FileType php set shiftwidth=4 
+  autocmd FileType php set tabstop=4 
+  autocmd FileType php set expandtab 
+  autocmd FileType php set listchars=tab:>-
+  autocmd FileType php set list
+augroup END 
+
 
 filetype plugin indent on
 filetype plugin on
@@ -142,6 +167,9 @@ autocmd BufReadPre //* :NoMatchParen
 " Fullscreen
 noremap <F11> <ESC>:call libcallnr("gvimfullscreen.dll","ToggleFullScreen",0)<CR>
 
+" Yaml Coloring
+au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/yaml.vim
+
 " WEB DEVELOPMENT
 " better html/javascript syntax/indenting (see javascript plugin)
 let g:html_indent_inctags = "html,body,head,tbody"
@@ -181,6 +209,10 @@ nnoremap <silent> <leader>/ :noh<CR>
 " switch semi-colon and colon
 nnoremap <Space> :
 vnoremap <Space> :
+" Better <ESC> (to go back to normal mode from insert mode)
+inoremap <C-Space> <ESC>
+nnoremap <C-Space> <ESC>
+vnoremap <C-Space> <ESC>
 
 " Remap block-visual mode to alt-V, and set paste-from-clipboard to C-v
 nnoremap <A-v> <C-v>
@@ -190,6 +222,34 @@ vnoremap <C-v> d"*p<CR>
 nnoremap <C-c> "*y<CR>
 inoremap <C-c> <ESC>"*y<CR>
 vnoremap <C-c> "*y<CR>
+
+cnoremap <C-v> <C-r>*
+
+" in insert mode, mimic basic cursor commands with ctrl
+noremap! <C-h> <left>
+noremap! <C-j> <down>
+noremap! <C-k> <up>
+noremap! <C-l> <right>
+noremap! <C-b> <C-left>
+inoremap <C-f> <PageDown>
+inoremap <C-b> <PageUp>
+
+" in insert mode, shift cursor closes out insert mode and goes into visual
+" mode
+inoremap <S-right> <Esc>vl
+" inoremap <c-L> <Esc>vl
+inoremap <S-left> <Esc>vh
+" inoremap <c-H> <Esc>vh
+inoremap <S-up> <Esc>vk
+" inoremap <c-K> <Esc>vk
+inoremap <S-down> <Esc>vj
+" inoremap <c-J> <Esc>vj
+inoremap <c-u> <Esc>ui
+
+" use control-d for delete, especially in insert mode, but everywhere
+noremap <c-d> <Del>
+cnoremap <c-d> <Del>
+inoremap <c-d> <Esc><right><Del>
 
 " Move between editor lines (instead of actual lines) when holding CTRL 
 vmap <C-j> gj
@@ -208,8 +268,6 @@ inoremap <C-tab> <ESC>:bn<CR>
 inoremap <C-S-tab> <ESC>:bp<CR>
 nnoremap <C-tab> :bn<CR>
 nnoremap <C-S-tab> :bp<CR>
-vnoremap <C-tab> <ESC>:bn<CR>
-vnoremap <C-S-tab> <ESC>:bp<CR>
 
 " Highlight whitespace with <leader>w, and remove with <leader>W
 nnoremap <leader>w :/\s\+$<CR>
@@ -225,14 +283,17 @@ nnoremap <leader>D 0i# <ESC>"=strftime("%a %b %d, %Y (%I:%M %p)")<CR>po<ESC>xxi
 nnoremap <silent> <leader>s :set spell!<CR>
 set spelllang=en_us " Set region to US English
 
-" Better <ESC> (to go back to normal mode from insert mode)
-inoremap <C-Space> <ESC>
 noremap <C-s> :w<CR>
 
 " Start editing the vimrc in a new buffer
 nnoremap <leader>v :call Edit_vimrc()<CR>
 function! Edit_vimrc()
     exe 'edit ' . g:DV . '/vimrc'
+endfunction
+" Start editing the notes file in a new buffer
+nnoremap <leader>n :call Edit_notes()<CR>
+function! Edit_notes()
+    exe 'edit ' . g:DV . '/notes.txt'
 endfunction
 nnoremap <leader>o :call Edit_colorscheme()<CR>
 function! Edit_colorscheme()
@@ -248,11 +309,6 @@ set wrap linebreak
 " INSERT MODE MAPPINGS
 inoremap <C-0> <C-S-o>$
 inoremap <C-9> <C-S-o>9
-
-" ABBREVIATIONS
-abbreviate jquery JQuery
-abbreviate labview LabVIEW
-abbreviate matlab MATLAB
 
 " SOME GIT SPECIFIC SETTINGS
 " Only do this part when compiled with support for autocommands.
@@ -288,4 +344,10 @@ if has('gui_running')
     set guioptions-=LlRrb
     set guioptions-=e
     set noscrollbind
+    set t_vb=
 endif
+
+" Tabbing in Visual Mode
+vnoremap <tab> >gv
+vnoremap <s-tab> <gv
+
