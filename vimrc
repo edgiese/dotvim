@@ -2,6 +2,7 @@ set nocompatible                " vi compatible is LAME
 autocmd!
 filetype off
 let g:DV='~/.vim'
+
 if has('win32') || has('win64')
     " If you are cloning this file you need to update the next line to your
     " .vim directory
@@ -13,6 +14,7 @@ if has('win32') || has('win64')
     let g:Powerline_symbols='fancy'
     " set guifont=Consolas:h10
     " let g:Powerline_symbols = 'compatible'
+    let &runtimepath=&runtimepath . ',c:\Documents and Settings\ed\vimfiles\force.com'
 elseif has('mac')
     " I don't know which mac font to use
     " set guifont=Monospace\ 8
@@ -24,6 +26,7 @@ else
     set guifont=CodingFontTobi\ 12
     " set guifont=ProggyTinyTTSZ\ 12
     let g:Powerline_symbols='fancy'
+    let &runtimepath=&runtimepath . ',~/vim/force.com'
 endif
 
 " All of my favorite plugins
@@ -151,7 +154,7 @@ if !exists('g:vimrc_has_run')
     syntax enable                   " turn syntax highlighting
     set background=light
     let g:solarized_termcolors=256
-    exe 'source '.g:DV."/colors/betterblack.vim"
+    exe 'source '.g:DV."/colors/delek.vim"
 endif
 
 " branching undo is new in vim 7.3
@@ -177,8 +180,8 @@ let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 " Some salesforce stuff
 au BufNewFile,BufRead *.less set filetype=less
-au BufRead,BufNewFile *.cls set filetype=apex
-au BufRead,BufNewFile *.page set filetype=page
+au BufRead,BufNewFile *.cls set filetype=apexcode
+au BufRead,BufNewFile *.page set filetype=visualforce
 au BufRead,BufNewFile *.json set filetype=javascript
 
 " GOOGLE SEARCH
@@ -195,7 +198,7 @@ if !exists("autocommands_loaded")
     autocmd bufwritepost vimrc source %
 
     " update the colorscheme upon saving
-    autocmd bufwritepost betterblack.vim :colorscheme betterblack
+    autocmd bufwritepost delek.vim :colorscheme delek
 endif
 
 " CUSTOM KEYCOMMANDS
@@ -297,7 +300,7 @@ function! Edit_notes()
 endfunction
 nnoremap <leader>o :call Edit_colorscheme()<CR>
 function! Edit_colorscheme()
-    exe 'edit ' . g:DV . '/colors/betterblack.vim'
+    exe 'edit ' . g:DV . '/colors/delek.vim'
     exe 'source ' . g:DV . '/bundle/csscolor/after/css.vim'
 endfunction
 
