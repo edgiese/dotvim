@@ -286,7 +286,7 @@ nnoremap <leader>D 0i# <ESC>"=strftime("%a %b %d, %Y (%I:%M %p)")<CR>po<ESC>xxi
 nnoremap <silent> <leader>s :set spell!<CR>
 set spelllang=en_us " Set region to US English
 
-noremap <C-s> :w<CR>
+" noremap <C-s> :w<CR>
 
 " Start editing the vimrc in a new buffer
 nnoremap <leader>v :call Edit_vimrc()<CR>
@@ -341,6 +341,18 @@ endif " has("autocmd")
 
 " SETTINGS FOR GVIM
 if has('gui_running')
+    set background=light
+    let g:solarized_termcolors=256
+    exe 'source '.g:DV."/colors/betterblack.vim"
+
+    " update the colorscheme upon saving
+    autocmd bufwritepost betterblack.vim :colorscheme betterblack
+
+    nnoremap <leader>o :call Edit_colorscheme()<CR>
+    function! Edit_colorscheme()
+        exe 'edit ' . g:DV . '/colors/betterblack.vim'
+        exe 'source ' . g:DV . '/bundle/csscolor/after/css.vim'
+    endfunction
     set guioptions-=m 		" remove menu bar
     set guioptions-=T		" remove toolbar
     set guioptions+=LlRrb   " remove all scrollbars
