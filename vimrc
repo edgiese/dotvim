@@ -2,6 +2,7 @@ set nocompatible                " vi compatible is LAME
 autocmd!
 filetype off
 let g:DV='~/.vim'
+
 if has('win32') || has('win64')
     " If you are cloning this file you need to update the next line to your
     " .vim directory
@@ -9,9 +10,12 @@ if has('win32') || has('win64')
     " Swap the comment out lines if you don't want to install better consolas
     " if you want to update your fonts, go to .vim/windows and double click
     " all of the font files there to install them
-    set guifont=Consolas:h10
-    let g:Powerline_symbols = 'compatible'
     set lines=999 columns=999
+    set guifont=Lucida\ Console:h9
+    let g:Powerline_symbols='fancy'
+    " set guifont=Consolas:h10
+    " let g:Powerline_symbols = 'compatible'
+    let &runtimepath=&runtimepath . ',c:\Documents and Settings\ed\vimfiles\force.com'
 elseif has('mac')
     " I don't know which mac font to use
     " set guifont=Monospace\ 8
@@ -23,6 +27,7 @@ else
     set guifont=CodingFontTobi\ 12
     " set guifont=ProggyTinyTTSZ\ 12
     let g:Powerline_symbols='fancy'
+    let &runtimepath=&runtimepath . ',~/vim/force.com'
 endif
 
 " All of my favorite plugins
@@ -150,7 +155,7 @@ if !exists('g:vimrc_has_run')
     syntax enable                   " turn syntax highlighting
     set background=light
     let g:solarized_termcolors=256
-    exe 'source '.g:DV."/colors/betterblack.vim"
+    exe 'source '.g:DV."/colors/delek.vim"
 endif
 
 " branching undo is new in vim 7.3
@@ -176,6 +181,8 @@ let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 " Some salesforce stuff
 au BufNewFile,BufRead *.less set filetype=less
+au BufRead,BufNewFile *.cls set filetype=apexcode
+au BufRead,BufNewFile *.page set filetype=visualforce
 au BufRead,BufNewFile *.json set filetype=javascript
 
 " GOOGLE SEARCH
@@ -192,7 +199,7 @@ if !exists("autocommands_loaded")
     autocmd bufwritepost vimrc source %
 
     " update the colorscheme upon saving
-    autocmd bufwritepost betterblack.vim :colorscheme betterblack
+    autocmd bufwritepost delek.vim :colorscheme delek
 endif
 
 
@@ -311,7 +318,7 @@ nnoremap <leader>D 0i# <ESC>"=strftime("%a %b %d, %Y (%I:%M %p)")<CR>po<ESC>xxi
 nnoremap <silent> <leader>s :set spell!<CR>
 set spelllang=en_us " Set region to US English
 
-noremap <C-s> :w<CR>
+" noremap <C-s> :w<CR>
 
 " Start editing the vimrc in a new buffer
 nnoremap <leader>v :call Edit_vimrc()<CR>
@@ -325,7 +332,7 @@ function! Edit_notes()
 endfunction
 nnoremap <leader>o :call Edit_colorscheme()<CR>
 function! Edit_colorscheme()
-    exe 'edit ' . g:DV . '/colors/betterblack.vim'
+    exe 'edit ' . g:DV . '/colors/delek.vim'
     exe 'source ' . g:DV . '/bundle/csscolor/after/css.vim'
 endfunction
 
@@ -366,6 +373,18 @@ endif " has("autocmd")
 
 " SETTINGS FOR GVIM
 if has('gui_running')
+    set background=light
+    let g:solarized_termcolors=256
+    exe 'source '.g:DV."/colors/betterblack.vim"
+
+    " update the colorscheme upon saving
+    autocmd bufwritepost betterblack.vim :colorscheme betterblack
+
+    nnoremap <leader>o :call Edit_colorscheme()<CR>
+    function! Edit_colorscheme()
+        exe 'edit ' . g:DV . '/colors/betterblack.vim'
+        exe 'source ' . g:DV . '/bundle/csscolor/after/css.vim'
+    endfunction
     set guioptions-=m 		" remove menu bar
     set guioptions-=T		" remove toolbar
     set guioptions+=LlRrb   " remove all scrollbars
