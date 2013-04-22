@@ -11,3 +11,5 @@ TABS ---------------------------------------------------------------------------
 :set listchars=tab:>-
 :set list | nolist
 
+############### local current directory to file directory
+:lcd %:h 

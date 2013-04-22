@@ -2,6 +2,7 @@ set nocompatible                " vi compatible is LAME
 autocmd!
 filetype off
 let g:DV='~/.vim'
+
 if has('win32') || has('win64')
     " If you are cloning this file you need to update the next line to your
     " .vim directory
@@ -9,10 +10,12 @@ if has('win32') || has('win64')
     " Swap the comment out lines if you don't want to install better consolas
     " if you want to update your fonts, go to .vim/windows and double click
     " all of the font files there to install them
+    set lines=999 columns=999
     set guifont=Lucida\ Console:h9
     let g:Powerline_symbols='fancy'
     " set guifont=Consolas:h10
     " let g:Powerline_symbols = 'compatible'
+    let &runtimepath=&runtimepath . ',c:\Documents and Settings\ed\vimfiles\force.com'
 elseif has('mac')
     " I don't know which mac font to use
     " set guifont=Monospace\ 8
@@ -24,6 +27,7 @@ else
     set guifont=CodingFontTobi\ 12
     " set guifont=ProggyTinyTTSZ\ 12
     let g:Powerline_symbols='fancy'
+    let &runtimepath=&runtimepath . ',~/vim/force.com'
 endif
 
 " All of my favorite plugins
@@ -129,6 +133,9 @@ set hidden
 if !exists('g:vimrc_has_run')
     let g:vimrc_has_run='True'
     syntax enable                   " turn syntax highlighting
+    set background=light
+    let g:solarized_termcolors=256
+    exe 'source '.g:DV."/colors/delek.vim"
 endif
 
 " branching undo is new in vim 7.3
@@ -154,8 +161,8 @@ let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 " Some salesforce stuff
 au BufNewFile,BufRead *.less set filetype=less
-au BufRead,BufNewFile *.cls set filetype=apex
-au BufRead,BufNewFile *.page set filetype=page
+au BufRead,BufNewFile *.cls set filetype=apexcode
+au BufRead,BufNewFile *.page set filetype=visualforce
 au BufRead,BufNewFile *.json set filetype=javascript
 
 " GOOGLE SEARCH
@@ -170,7 +177,40 @@ if !exists("autocommands_loaded")
 
     " Rerun vimrc upon editing
     autocmd bufwritepost vimrc source %
+
+    " update the colorscheme upon saving
+    autocmd bufwritepost delek.vim :colorscheme delek
 endif
+
+
+if has("unix")
+    let &runtimepath=&runtimepath . ',~/vim/force.com'
+elseif has("win32")
+    let &runtimepath=&runtimepath . ',c:\Users\Ed\.vim\force.com'
+    if !exists("g:apex_backup_folder")
+        " full path required here, relative may not work
+        let g:apex_backup_folder="c:\\temp\\apex\\backup"
+    endif
+    if !exists("g:apex_temp_folder")
+        " full path required here, relative may not work
+        let g:apex_temp_folder="c:\\temp\\apex\\gvim-deployment"
+    endif
+    if !exists("g:apex_deployment_error_log")
+        let g:apex_deployment_error_log="gvim-deployment-error.log"
+    endif
+    if !exists("g:apex_properties_folder")
+        " full path required here, relative may not work
+        let g:apex_properties_folder="c:\\temp\\vim-force.com-tests\\secure-properties"
+    endif
+    let g:apex_binary_tee = "c:\\Program Files (x86)\\Git\\bin\\tee.exe"
+    let g:apex_binary_touch = "c:\\Program Files (x86)\\Git\\bin\\touch.exe"
+endif
+au! BufRead,BufNewFile *.cls,*.trigger set filetype=apexcode
+" set two file types for apex page: html (for syntax) and apexcode (for compilation and tags)
+" use <C-0> for Javascript and <C-U> for html complete
+au! BufRead,BufNewFile *.page,*.component,*.scf set filetype=visualforce | setlocal omnifunc=htmlcomplete#CompleteTags | setlocal completefunc=visualforcecomplete#Complete
+au! BufRead,BufNewFile *JS.resource set filetype=apexcode.javascript | set syntax=javascript | setlocal omnifunc=javascriptcomplete#CompleteJS
+
 
 " CUSTOM KEYCOMMANDS
 
@@ -185,6 +225,7 @@ nnoremap <Space> :
 vnoremap <Space> :
 " Better <ESC> (to go back to normal mode from insert mode)
 inoremap <C-Space> <ESC>
+inoremap jk <ESC>
 nnoremap <C-Space> <ESC>
 vnoremap <C-Space> <ESC>
 
@@ -269,6 +310,11 @@ nnoremap <leader>n :call Edit_notes()<CR>
 function! Edit_notes()
     exe 'edit ' . g:DV . '/notes.txt'
 endfunction
+nnoremap <leader>o :call Edit_colorscheme()<CR>
+function! Edit_colorscheme()
+    exe 'edit ' . g:DV . '/colors/delek.vim'
+    exe 'source ' . g:DV . '/bundle/csscolor/after/css.vim'
+endfunction
 
 " VISUALIZATION STUFF
 " Show EOL type and last modified timestamp, right after the filename
@@ -279,7 +325,7 @@ set wrap linebreak
 inoremap <C-0> <C-S-o>$
 inoremap <C-9> <C-S-o>9
 
-" SOME GIT SPECIFIC SETTINGS
+" SOME GIT SPECIFIC SETTING
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
     "Set UTF-8 as the default encoding for commit messages
@@ -326,9 +372,9 @@ if has('gui_running')
     set guioptions-=e
     set noscrollbind
     set t_vb=
+    color desert
 endif
 
 " Tabbing in Visual Mode
 vnoremap <tab> >gv
 vnoremap <s-tab> <gv
-
