@@ -66,16 +66,16 @@ Bundle 'majutsushi/tagbar.git'
 noremap <silent> <F2> :TagbarToggle<CR>
 
 Bundle 'ervandew/supertab.git'
-set completeopt=longest,menuone
-let g:SuperTabLongestEnhanced = 1
-let g:SuperTabLongestHighlight = 1
-let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:SuperTabCrMapping = 1
-autocmd FileType *
-   \ if &omnifunc != '' |
-   \   call SuperTabChain(&omnifunc, "<c-p>") |
-   \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-   \ endif
+set completeopt=longest,menuone,preview
+" let g:SuperTabLongestEnhanced = 1
+" let g:SuperTabLongestHighlight = 1
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+" let g:SuperTabCrMapping = 1
+" autocmd FileType *
+"    \ if &omnifunc != '' |
+"    \   call SuperTabChain(&omnifunc, "<c-p>") |
+"    \   call SuperTabSetDefaultCompletionType("<c-x><c-o>") |
+"    \ endif
 
 Bundle 'Lokaltog/vim-powerline.git'
 let g:Powerline_stl_path_style='short'
@@ -96,6 +96,7 @@ augroup json_autocmd
 augroup END 
 
 " php File Settings
+source ~/.vim/plugin/php-doc.vim
 au BufRead,BufNewFile *.php set filetype=php
 augroup php_autocmd 
   autocmd FileType php set autoindent 
@@ -104,6 +105,9 @@ augroup php_autocmd
   autocmd FileType php set expandtab 
   autocmd FileType php set listchars=tab:>-
   autocmd FileType php set list
+  autocmd FileType php inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i
+  autocmd FileType php nnoremap <C-P> :call PhpDocSingle()<CR>
+  autocmd FileType php vnoremap <C-P> :call PhpDocRange()<CR> 
 augroup END 
 
 
