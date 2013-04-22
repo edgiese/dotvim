@@ -73,31 +73,11 @@ autocmd FileType *
    \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
    \ endif
 
-Bundle "MarcWeber/vim-addon-mw-utils.git"
 Bundle 'Lokaltog/vim-powerline.git'
 let g:Powerline_stl_path_style='short'
 
 Bundle 'kien/ctrlp.vim.git'
 let g:ctrlp_cmd='CtrlPRoot'
-
-Bundle 'scrooloose/syntastic.git'
-nnoremap <leader>e :SyntasticCheck<CR>
-let g:locliststate=1
-let g:syntastic_enable_ballons=0
-let g:syntastic_enable_auto_jump=1
-let g:syntastic_enable_highlighting=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_mode_map = { 'mode': 'passive',
-                            \ 'active_filetypes': [], 
-                            \ 'passive_filetypes': [] }
-
-" Snipmate and three dependencies
-" To freshen, use the :BundleInstall Command
-Bundle "tomtom/tlib_vim"
-Bundle "honza/snipmate-snippets"
-Bundle "garbas/vim-snipmate"
-Bundle "beyondwords/vim-twig"
-
 
 " JSON support
 au! BufRead,BufNewFile *.json set filetype=json 
