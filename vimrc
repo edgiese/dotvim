@@ -3,6 +3,7 @@ autocmd!
 filetype off
 let g:DV='~/.vim'
 
+" let g:tagbar_phpctags_bin="~/.vim/extra/phpctags/phpctags"
 if has('win32') || has('win64')
     " If you are cloning this file you need to update the next line to your
     " .vim directory
@@ -16,6 +17,7 @@ if has('win32') || has('win64')
     " set guifont=Consolas:h10
     " let g:Powerline_symbols = 'compatible'
     let &runtimepath=&runtimepath . ',c:\Documents and Settings\ed\vimfiles\force.com'
+    " let g:tagbar_phpctags_bin="ctags"
 elseif has('mac')
     " I don't know which mac font to use
     " set guifont=Monospace\ 8
@@ -47,7 +49,7 @@ Bundle 'vim-scripts/greplace.vim'
 Bundle 'ap/vim-css-color.git'
 
 Bundle 'scrooloose/nerdtree.git'
-noremap <silent> <F1> :NERDTreeToggle<CR>
+noremap <silent> <F4> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\~$', '\.pyc']
 
 Bundle 'corntrace/bufexplorer'
@@ -64,6 +66,8 @@ let Tlist_Use_Right_Window=1
 
 Bundle 'majutsushi/tagbar.git'
 noremap <silent> <F2> :TagbarToggle<CR>
+
+
 
 Bundle 'ervandew/supertab.git'
 set completeopt=longest,menuone,preview
@@ -94,6 +98,13 @@ augroup json_autocmd
   autocmd FileType json set expandtab 
   autocmd FileType json set foldmethod=syntax 
 augroup END 
+
+function! PHPprojectCtags()
+    let curNodePath =  g:NERDTreeFileNode.GetSelected().path.str()
+    exec "!ctags -f ".curNodePath."/ctags -h \".php\" -R --totals=yes --tag-relative=yes --PHP-kinds=+cf --regex-PHP=\"/abstract class ([^ ]*)/\\1/c/\" --regex-PHP=\"/interface ([^ ]*)/\\1/c/\" --regex-PHP=\"/public function ([^ (]*)/\\1/f/\" --regex-PHP=\"/private function ([^ (]*)/\\1/f/\" --regex-PHP=\"/static function ([^ (]*)/\\1/f/\" --regex-PHP=\"/protected function ([^ (]*)/\\1/f/\" ".curNodePath
+    set tags="".curNodePath."/ctags"
+endfunction
+nnoremap <F6> :call PHPprojectCtags()<CR>
 
 " php File Settings
 source ~/.vim/plugin/php-doc.vim
