@@ -150,7 +150,7 @@ if !exists('g:vimrc_has_run')
     syntax enable                   " turn syntax highlighting
     set background=light
     let g:solarized_termcolors=256
-    exe 'source '.g:DV."/colors/delek.vim"
+    color peachpuff 
 endif
 
 " branching undo is new in vim 7.3
@@ -192,9 +192,6 @@ if !exists("autocommands_loaded")
 
     " Rerun vimrc upon editing
     autocmd bufwritepost vimrc source %
-
-    " update the colorscheme upon saving
-    autocmd bufwritepost delek.vim :colorscheme delek
 endif
 
 
@@ -325,11 +322,6 @@ nnoremap <leader>n :call Edit_notes()<CR>
 function! Edit_notes()
     exe 'edit ' . g:DV . '/notes.txt'
 endfunction
-nnoremap <leader>o :call Edit_colorscheme()<CR>
-function! Edit_colorscheme()
-    exe 'edit ' . g:DV . '/colors/delek.vim'
-    exe 'source ' . g:DV . '/bundle/csscolor/after/css.vim'
-endfunction
 
 " VISUALIZATION STUFF
 " Show EOL type and last modified timestamp, right after the filename
@@ -370,16 +362,7 @@ endif " has("autocmd")
 if has('gui_running')
     set background=dark
     let g:solarized_termcolors=256
-    exe 'source '.g:DV."/colors/delek.vim"
 
-    " update the colorscheme upon saving
-    autocmd bufwritepost delek.vim :colorscheme delek
-
-    nnoremap <leader>o :call Edit_colorscheme()<CR>
-    function! Edit_colorscheme()
-        exe 'edit ' . g:DV . '/colors/delek.vim'
-    "    exe 'source ' . g:DV . '/bundle/csscolor/after/css.vim'
-    endfunction
     set guioptions-=m 		" remove menu bar
     set guioptions-=T		" remove toolbar
     set guioptions+=LlRrb   " remove all scrollbars
@@ -387,7 +370,7 @@ if has('gui_running')
     set guioptions-=e
     set noscrollbind
     set t_vb=
-    color delek
+    color darkblue 
 endif
 
 " Tabbing in Visual Mode
