@@ -368,17 +368,17 @@ endif " has("autocmd")
 
 " SETTINGS FOR GVIM
 if has('gui_running')
-    set background=light
+    set background=dark
     let g:solarized_termcolors=256
-    exe 'source '.g:DV."/colors/betterblack.vim"
+    exe 'source '.g:DV."/colors/delek.vim"
 
     " update the colorscheme upon saving
-    autocmd bufwritepost betterblack.vim :colorscheme betterblack
+    autocmd bufwritepost delek.vim :colorscheme delek
 
     nnoremap <leader>o :call Edit_colorscheme()<CR>
     function! Edit_colorscheme()
-        exe 'edit ' . g:DV . '/colors/betterblack.vim'
-        exe 'source ' . g:DV . '/bundle/csscolor/after/css.vim'
+        exe 'edit ' . g:DV . '/colors/delek.vim'
+    "    exe 'source ' . g:DV . '/bundle/csscolor/after/css.vim'
     endfunction
     set guioptions-=m 		" remove menu bar
     set guioptions-=T		" remove toolbar
@@ -387,7 +387,7 @@ if has('gui_running')
     set guioptions-=e
     set noscrollbind
     set t_vb=
-    color desert
+    color delek
 endif
 
 " Tabbing in Visual Mode
