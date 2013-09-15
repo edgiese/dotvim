@@ -56,6 +56,7 @@ Bundle 'corntrace/bufexplorer'
 noremap <silent> <F3> :BufExplorer<CR>
 let g:bufExplorerDefaultHelp=0
 
+Bundle 'xolox/vim-misc.git'
 Bundle 'xolox/vim-session.git'
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
