@@ -5,6 +5,51 @@ Everyone has their own tastes, and will probably want to customize their setup f
 
 Please let me know if you get stuck in the install process (make a github issue) and I will try to help out.
 
+# Install instructions on Linux/Mac
+
+Summary:
+
+	git clone git://github.com/edgiese/dotvim.git ~/.vim
+	ln -s ~/.vim/vimrc ~/.vimrc
+	sudo get-apt install ctags
+	vim
+	:BundleInstall
+
+
+### 1. Downlod the repository into your .vim folder
+
+	git clone git://github.com/edgiese/dotvim.git ~/.vim
+
+
+### 2. Create a symbolic link to your vimrc
+
+	ln -s ~/.vim/vimrc ~/.vimrc
+	
+You may wonder why not just copy vimrc up a directory and name it .vimrc?  By moving it up a directory we would take it out of the repository, and would no longer be able to track changes.
+
+Note that I don't use a gvimrc file, instead I use an if statement in my vimrc that allows me to run gui stuff when appropriate, this keeps all my settings in a single file.
+
+### 3. Update a directory in the vimrc
+You need to update a single directory in your vimrc (the line is towards the top of the file)
+
+
+### 4. Run BundleInstall
+You should already have vundle installed, go into vim and type:
+
+    :BundleInstall
+
+If you setup Vundle correctly, this will now download all the plugins!
+
+### 5. Plugin Dependencies
+
+Ctags is a program that parses your code and generates links between files.  Ctags is used by a few plugins that I have, and they will complain if you don't have them installed.  You can remove the plugins, but I reccomend trying to install ctags.  It is super useful.  You can read about it [here](http://ctags.sourceforge.net/)
+
+    sudo get-apt install ctags
+
+
+
+If any of the plugins give you trouble, you can comment them out in your vimrc.
+
 # Installation on Windows
 
 
@@ -53,44 +98,6 @@ Go into vim and type:
 
 If you setup Vundle correctly, this will now download all the plugins!
 
-# Install instructions on Linux/Mac
-
-### 1. Downlod the repository into your .vim folder
-
-	git clone git://github.com/johndgiese/dotvim.git ~/.vim
-
-
-### 2. Create a symbolic link to your vimrc
-
-	ln -s ~/.vim/vimrc ~/.vimrc
-	
-You may wonder why not just copy vimrc up a directory and name it .vimrc?  By moving it up a directory we would take it out of the repository, and would no longer be able to track changes.
-
-Note that I don't use a gvimrc file, instead I use an if statement in my vimrc that allows me to run gui stuff when appropriate, this keeps all my settings in a single file.
-
-### 3. Update a directory in the vimrc
-You need to update a single directory in your vimrc (the line is towards the top of the file)
-
-
-### 4. Run BundleInstall
-You should already have vundle installed, go into vim and type:
-
-    :BundleInstall
-
-If you setup Vundle correctly, this will now download all the plugins!
-
-### 5. Plugin Dependencies
-
-Ctags is a program that parses your code and generates links between files.  Ctags is used by a few plugins that I have, and they will complain if you don't have them installed.  You can remove the plugins, but I reccomend trying to install ctags.  It is super useful.  You can read about it [here](http://ctags.sourceforge.net/)
-
-    sudo get-apt install ctags
-
-If you want to use the vipy plugin you will need to install ipython and pyzmq, and finally run another batch script, as described in the install instructions [here](https://github.com/johndgiese/vipy).  Basically it is:
-
-    sudo apt-get install python-ipython
-    sudo apt-get install python-pyzmq
-
-If any of the plugins give you trouble, you can comment them out in your vimrc.
 
 # How this vim setup differs from normal vim
 
