@@ -3,10 +3,13 @@ autocmd!
 filetype off
 let g:DV='~/.vim'
 
+" All of my favorite plugins
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
+" Bundle 'altercation/vim-colors-solarized'
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive.git'
+" Bundle 'Townk/vim-autoclose.git'
 Bundle 'scrooloose/nerdcommenter.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'vim-scripts/taglist.vim.git'
@@ -60,15 +63,18 @@ augroup json_autocmd
   autocmd! 
   autocmd FileType json set autoindent 
   autocmd FileType json set formatoptions=tcq2l 
-  autocmd FileType json set textwidth=78 shiftwidth=2 
-  autocmd FileType json set softtabstop=2 tabstop=8 
+  autocmd FileType json set textwidth=78 shiftwidth=4 
+  autocmd FileType json set softtabstop=4 tabstop=4 
   autocmd FileType json set expandtab 
   autocmd FileType json set foldmethod=syntax 
 augroup END 
 
 function! PHPprojectCtags()
+"     let curNodePath =  g:NERDTreeFileNode.GetSelected().path.str()
+"    exec "!ctags -f ".curNodePath."/ctags -h \".php\" -R --totals=yes --tag-relative=yes --PHP-kinds=+cf --regex-PHP=\"/abstract class ([^ ]*)/\\1/c/\" --regex-PHP=\"/interface ([^ ]*)/\\1/c/\" --regex-PHP=\"/public function ([^ (]*)/\\1/f/\" --regex-PHP=\"/private function ([^ (]*)/\\1/f/\" --regex-PHP=\"/static function ([^ (]*)/\\1/f/\" --regex-PHP=\"/protected function ([^ (]*)/\\1/f/\" ".curNodePath
+"    set tags="".curNodePath."/ctags"
     exec "!ctags -f ctags -h \".php\" -R --totals=yes --tag-relative=yes --PHP-kinds=+cf --regex-PHP=\"/abstract class ([^ ]*)/\\1/c/\" --regex-PHP=\"/interface ([^ ]*)/\\1/c/\" --regex-PHP=\"/public function ([^ (]*)/\\1/f/\" --regex-PHP=\"/private function ([^ (]*)/\\1/f/\" --regex-PHP=\"/static function ([^ (]*)/\\1/f/\" --regex-PHP=\"/protected function ([^ (]*)/\\1/f/\" ."
-    set tags="ctags"
+    set tags=ctags
 endfunction
 nnoremap <F6> :call PHPprojectCtags()<CR>
 
@@ -77,9 +83,9 @@ source ~/.vim/plugin/php-doc.vim
 au BufRead,BufNewFile *.php set filetype=php
 augroup php_autocmd 
   autocmd FileType php set autoindent 
-  autocmd FileType php set sw=4 
-  autocmd FileType php set ts=4
-  autocmd FileType php set sts=4
+  autocmd FileType php set shiftwidth=4 
+  autocmd FileType php set tabstop=4 
+  autocmd FileType php set softtabstop=4 
   autocmd FileType php set expandtab 
   autocmd FileType php set listchars=tab:>-
   autocmd FileType php set list
@@ -97,7 +103,7 @@ set showmatch                   " automatically show matching brackets
 set vb                          " turn on the "visual bell" - quieter than the "audio blink"
 set ruler                       " show the cursor position all the time
 set laststatus=2                
-set " backspace=indent,eol,start  " make that backspace key work the way it should
+set backspace=indent,eol,start  " make that backspace key work the way it should
 set showmode                    " show the current mode
 set ts=4 sts=4 sw=4 expandtab   " default indentation settings
 set number		            	" turn on line numbers by default
@@ -115,7 +121,9 @@ set hidden
 if !exists('g:vimrc_has_run')
     let g:vimrc_has_run='True'
     syntax enable                   " turn syntax highlighting
-    color evening
+    set background=light
+    let g:solarized_termcolors=256
+    color peachpuff 
 endif
 
 " branching undo is new in vim 7.3
@@ -145,12 +153,49 @@ au BufRead,BufNewFile *.cls set filetype=apexcode
 au BufRead,BufNewFile *.page set filetype=visualforce
 au BufRead,BufNewFile *.json set filetype=javascript
 
+" GOOGLE SEARCH
+function! GoogleSearch()
+    let searchterm = getreg("g")
+    silent! exec "silent! !chrome \"http://google.com/search?q=" . searchterm . "\" &"
+endfunction
+vnoremap <leader>g "gy<Esc>:call GoogleSearch()<CR>
+
 if !exists("autocommands_loaded")
     let autocommands_loaded=1
 
     " Rerun vimrc upon editing
     autocmd bufwritepost vimrc source %
 endif
+
+
+if has("unix")
+    let &runtimepath=&runtimepath . ',~/vim/force.com'
+elseif has("win32")
+    let &runtimepath=&runtimepath . ',c:\Users\Ed\.vim\force.com'
+    if !exists("g:apex_backup_folder")
+        " full path required here, relative may not work
+        let g:apex_backup_folder="c:\\temp\\apex\\backup"
+    endif
+    if !exists("g:apex_temp_folder")
+        " full path required here, relative may not work
+        let g:apex_temp_folder="c:\\temp\\apex\\gvim-deployment"
+    endif
+    if !exists("g:apex_deployment_error_log")
+        let g:apex_deployment_error_log="gvim-deployment-error.log"
+    endif
+    if !exists("g:apex_properties_folder")
+        " full path required here, relative may not work
+        let g:apex_properties_folder="c:\\temp\\vim-force.com-tests\\secure-properties"
+    endif
+    let g:apex_binary_tee = "c:\\Program Files (x86)\\Git\\bin\\tee.exe"
+    let g:apex_binary_touch = "c:\\Program Files (x86)\\Git\\bin\\touch.exe"
+endif
+au! BufRead,BufNewFile *.cls,*.trigger set filetype=apexcode
+" set two file types for apex page: html (for syntax) and apexcode (for compilation and tags)
+" use <C-0> for Javascript and <C-U> for html complete
+au! BufRead,BufNewFile *.page,*.component,*.scf set filetype=visualforce | setlocal omnifunc=htmlcomplete#CompleteTags | setlocal completefunc=visualforcecomplete#Complete
+au! BufRead,BufNewFile *JS.resource set filetype=apexcode.javascript | set syntax=javascript | setlocal omnifunc=javascriptcomplete#CompleteJS
+
 
 " CUSTOM KEYCOMMANDS
 
@@ -181,7 +226,7 @@ vnoremap <C-c> "*y<CR>
 cnoremap <C-v> <C-r>*
 
 " in insert mode, mimic basic cursor commands with ctrl
-noremap! <C-h> <left>
+" noremap! <C-h> <left>
 noremap! <C-j> <down>
 noremap! <C-k> <up>
 noremap! <C-l> <right>
@@ -285,6 +330,8 @@ if has("autocmd")
 
       autocmd Syntax gitcommit setlocal textwidth=74
 endif " has("autocmd")
+
+color evening
 
 " Tabbing in Visual Mode
 vnoremap <tab> >gv
