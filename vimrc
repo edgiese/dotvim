@@ -3,35 +3,6 @@ autocmd!
 filetype off
 let g:DV='~/.vim'
 
-" let g:tagbar_phpctags_bin="~/.vim/extra/phpctags/phpctags"
-if has('win32') || has('win64')
-    " If you are cloning this file you need to update the next line to your
-    " .vim directory
-
-    " Swap the comment out lines if you don't want to install better consolas
-    " if you want to update your fonts, go to .vim/windows and double click
-    " all of the font files there to install them
-    set lines=999 columns=999
-    set guifont=Lucida\ Console:h9
-    let g:Powerline_symbols='fancy'
-    " set guifont=Consolas:h10
-    " let g:Powerline_symbols = 'compatible'
-    let &runtimepath=&runtimepath . ',c:\Documents and Settings\ed\vimfiles\force.com'
-    " let g:tagbar_phpctags_bin="ctags"
-elseif has('mac')
-    " I don't know which mac font to use
-    " set guifont=Monospace\ 8
-    let g:Powerline_symbols='compatible'
-else
-    " set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
-    " set guifont=Inconsolata\ 12
-    " set guifont=ProggyCleanTT\ 12
-    set guifont=CodingFontTobi\ 12
-    " set guifont=ProggyTinyTTSZ\ 12
-    let g:Powerline_symbols='fancy'
-    let &runtimepath=&runtimepath . ',~/vim/force.com'
-endif
-
 " All of my favorite plugins
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
@@ -67,8 +38,6 @@ let Tlist_Use_Right_Window=1
 
 Bundle 'majutsushi/tagbar.git'
 noremap <silent> <F2> :TagbarToggle<CR>
-
-
 
 Bundle 'ervandew/supertab.git'
 set completeopt=longest,menuone,preview
@@ -195,6 +164,10 @@ if !exists("autocommands_loaded")
     autocmd bufwritepost vimrc source %
 endif
 
+" Colors
+set t_Co=256
+syntax on
+set background=dark
 
 if has("unix")
     let &runtimepath=&runtimepath . ',~/vim/force.com'
