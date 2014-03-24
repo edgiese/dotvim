@@ -63,16 +63,18 @@ augroup json_autocmd
   autocmd! 
   autocmd FileType json set autoindent 
   autocmd FileType json set formatoptions=tcq2l 
-  autocmd FileType json set textwidth=78 shiftwidth=2 
-  autocmd FileType json set softtabstop=2 tabstop=8 
+  autocmd FileType json set textwidth=78 shiftwidth=4 
+  autocmd FileType json set softtabstop=4 tabstop=4 
   autocmd FileType json set expandtab 
   autocmd FileType json set foldmethod=syntax 
 augroup END 
 
 function! PHPprojectCtags()
-    let curNodePath =  g:NERDTreeFileNode.GetSelected().path.str()
-    exec "!ctags -f ".curNodePath."/ctags -h \".php\" -R --totals=yes --tag-relative=yes --PHP-kinds=+cf --regex-PHP=\"/abstract class ([^ ]*)/\\1/c/\" --regex-PHP=\"/interface ([^ ]*)/\\1/c/\" --regex-PHP=\"/public function ([^ (]*)/\\1/f/\" --regex-PHP=\"/private function ([^ (]*)/\\1/f/\" --regex-PHP=\"/static function ([^ (]*)/\\1/f/\" --regex-PHP=\"/protected function ([^ (]*)/\\1/f/\" ".curNodePath
-    set tags="".curNodePath."/ctags"
+"     let curNodePath =  g:NERDTreeFileNode.GetSelected().path.str()
+"    exec "!ctags -f ".curNodePath."/ctags -h \".php\" -R --totals=yes --tag-relative=yes --PHP-kinds=+cf --regex-PHP=\"/abstract class ([^ ]*)/\\1/c/\" --regex-PHP=\"/interface ([^ ]*)/\\1/c/\" --regex-PHP=\"/public function ([^ (]*)/\\1/f/\" --regex-PHP=\"/private function ([^ (]*)/\\1/f/\" --regex-PHP=\"/static function ([^ (]*)/\\1/f/\" --regex-PHP=\"/protected function ([^ (]*)/\\1/f/\" ".curNodePath
+"    set tags="".curNodePath."/ctags"
+    exec "!ctags -f ctags -h \".php\" -R --totals=yes --tag-relative=yes --PHP-kinds=+cf --regex-PHP=\"/abstract class ([^ ]*)/\\1/c/\" --regex-PHP=\"/interface ([^ ]*)/\\1/c/\" --regex-PHP=\"/public function ([^ (]*)/\\1/f/\" --regex-PHP=\"/private function ([^ (]*)/\\1/f/\" --regex-PHP=\"/static function ([^ (]*)/\\1/f/\" --regex-PHP=\"/protected function ([^ (]*)/\\1/f/\" ."
+    set tags=ctags
 endfunction
 nnoremap <F6> :call PHPprojectCtags()<CR>
 
@@ -83,6 +85,7 @@ augroup php_autocmd
   autocmd FileType php set autoindent 
   autocmd FileType php set shiftwidth=4 
   autocmd FileType php set tabstop=4 
+  autocmd FileType php set softtabstop=4 
   autocmd FileType php set expandtab 
   autocmd FileType php set listchars=tab:>-
   autocmd FileType php set list
@@ -227,7 +230,7 @@ vnoremap <C-c> "*y<CR>
 cnoremap <C-v> <C-r>*
 
 " in insert mode, mimic basic cursor commands with ctrl
-noremap! <C-h> <left>
+" noremap! <C-h> <left>
 noremap! <C-j> <down>
 noremap! <C-k> <up>
 noremap! <C-l> <right>
@@ -332,20 +335,7 @@ if has("autocmd")
       autocmd Syntax gitcommit setlocal textwidth=74
 endif " has("autocmd")
 
-" SETTINGS FOR GVIM
-if has('gui_running')
-    set background=dark
-    let g:solarized_termcolors=256
-
-    set guioptions-=m 		" remove menu bar
-    set guioptions-=T		" remove toolbar
-    set guioptions+=LlRrb   " remove all scrollbars
-    set guioptions-=LlRrb
-    set guioptions-=e
-    set noscrollbind
-    set t_vb=
-    color darkblue 
-endif
+color evening
 
 " Tabbing in Visual Mode
 vnoremap <tab> >gv
