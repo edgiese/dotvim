@@ -11,7 +11,7 @@ Summary:
 
 	git clone git://github.com/edgiese/dotvim.git ~/.vim
 	ln -s ~/.vim/vimrc ~/.vimrc
-	sudo get-apt install ctags
+	sudo apt-get install ctags
 	vim
 	:BundleInstall
 
