@@ -335,7 +335,7 @@ if has("autocmd")
       autocmd Syntax gitcommit setlocal textwidth=74
 endif " has("autocmd")
 
-color evening
+color darkblue
 
 " Tabbing in Visual Mode
 vnoremap <tab> >gv
